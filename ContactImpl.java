@@ -66,11 +66,17 @@ public class ContactImpl implements Contact {
     }
 
     /**
-     * Add the notes on contact
+     * Add the notes on contact - if
+     * notes already added, punctuation separator inserted
      * {@Inheritdoc}
      */
     @Override
     void addNotes(String note){
-        
+        if (this.notes == ""){
+            this.notes = note;
+        } else {
+            this.notes = this.notes + "; " + note;
+        }
+        return
     }
 }
