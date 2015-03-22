@@ -8,15 +8,15 @@ import java.io.*;
 
 public class ContactImpl implements Contact {
 
-    private int identification;
-    private String name;
-    private String notes;
+    public int identification;
+    public String name;
+    public String notes;
 
     //Constructors
 
     ContactImpl(String thisName){
         this.name = thisName;
-        this.identification = null;
+        this.identification = 0;
         this.notes = "";
     }
 
@@ -43,7 +43,7 @@ public class ContactImpl implements Contact {
      * {@Inheritdoc}
      */
     @Override
-    int getId(){
+    public int getId(){
         return this.identification;
     }
 
@@ -52,7 +52,7 @@ public class ContactImpl implements Contact {
      * {@Inheritdoc}
      */
     @Override
-    String getName(){
+    public String getName(){
         return this.name;
     }
 
@@ -61,7 +61,7 @@ public class ContactImpl implements Contact {
      * {@Inheritdoc}
      */
     @Override
-    String getNotes(){
+    public String getNotes(){
         return this.notes;
     }
 
@@ -71,12 +71,12 @@ public class ContactImpl implements Contact {
      * {@Inheritdoc}
      */
     @Override
-    void addNotes(String note){
-        if (this.notes == ""){
+    public void addNotes(String note){
+        if(this.notes == ""){
             this.notes = note;
-        } else {
+        } else{
             this.notes = this.notes + "; " + note;
         }
-        return
+        return;
     }
 }
