@@ -38,4 +38,39 @@ public class ContactImpl implements Contact {
         this.notes = comments;
     }
 
+    /**
+     * Get ID to return ID number of contact
+     * {@Inheritdoc}
+     */
+    @Override
+    int getId(){
+        return this.identification;
+    }
+
+    /**
+     * Get Name to return name of contact
+     * {@Inheritdoc}
+     */
+    @Override
+    String getName(){
+        return this.name;
+    }
+
+    /**
+     * Return a (possibly empty) string of notes on contact
+     * {@Inheritdoc}
+     */
+    @Override
+    String getNotes(){
+        return this.notes;
+    }
+
+    /**
+     * Add the notes on contact
+     * {@Inheritdoc}
+     */
+    @Override
+    void addNotes(String note){
+        
+    }
 }
