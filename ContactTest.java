@@ -49,5 +49,11 @@ public class ContactsTest {
     public void testAddFakeNotes() {
         testContact.addNotes("Rowan is Callisto Prime");
         assertEquals("Rowan is Callisto Prime", testContact.getNotes());
+        /**
+         * If notes are already made on contact, adding more needs to be thought about
+         * can add a punctuation separator in between notes added at different times.
+         */
+        testContact.addNotes("Primes are T1 level Talents");
+        assertEquals("Rowan is Callisto Prime; Primes are T1 level Talents", testContact.getNotes());
     }
 }
