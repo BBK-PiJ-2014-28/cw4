@@ -29,7 +29,7 @@ public class MeetingTest {
 		testSet.add(rowan);
 		testSet.add(raven);
 		meetingDate = new GregorianCalendar(2015, 8, 28, 6, 33);
-		testMeeting = new Meeting(meetingDate, testSet, iD);
+		//meeting set up removed so can test the incorrect configurations
 	}
 	
 	@After
@@ -38,7 +38,13 @@ public class MeetingTest {
 	}
 	
 	@Test
+	public void testSetUp(){
+		//TODO insert tests for different constructions
+	}
+	
+	@Test
 	public void testGetMeetingID() {
+		testMeeting = new MeetingImpl(12, meetingDate, testSet);
 		assertEquals(12, testMeeting.getId());
 		fail("Not yet implemented");
 	}
