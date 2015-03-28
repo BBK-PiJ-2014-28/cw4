@@ -18,7 +18,7 @@ public class MeetingTest {
 
 	public Meeting testMeeting;
 	public Calendar meetingDate;
-	public Set<Contact> testSet;
+	public Set<Contact> testSet, correctSet;
 	public Contact rowan, raven;
 	public int iD = 12;
 	
@@ -49,5 +49,12 @@ public class MeetingTest {
 		assertEquals(correctDate, testMeeting.getDate());
 		fail("Not yet implemented");
 	}
-
+	
+	@Test
+	public void testGetContacts() {
+		correctSet.add(rowan);
+		correctSet.add(raven);
+		assertEquals(correctSet, testMeeting.getContacts());
+		fail("Not yet implemented");	
+	}
 }
