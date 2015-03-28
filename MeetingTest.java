@@ -18,6 +18,7 @@ import java.util.HashSet;
 public class MeetingTest {
 
 	public Meeting testMeeting;
+	public PastMeeting pastMeetingTest;
 	public Calendar meetingDate = new GregorianCalendar(2015, 8, 28, 6, 33);;
 	public Set<Contact> testSet, correctSet;
 	public Contact rowan, raven;
@@ -64,9 +65,9 @@ public class MeetingTest {
 	//New test for NOTES of PASTMEETING
 	@Test
 	public void testGetMeetingNotes(){
-		testMeeting = new PastMeetingImpl(12, meetingDate, testSet, "Rowan was telepathically agressive");
-		assertEquals("Rowan was telepathically agressive", testMeeting.getNotes());
-		Meeting secondMeeting = new PastMeetingImpl(12, meetingDate, testSet);
+		pastMeetingTest = new PastMeetingImpl(12, meetingDate, testSet, "Rowan was telepathically agressive");
+		assertEquals("Rowan was telepathically agressive", pastMeetingTest.getNotes());
+		PastMeeting secondMeeting = new PastMeetingImpl(12, meetingDate, testSet);
 		assertEquals("", secondMeeting.getNotes());
 		secondMeeting = null;
 	}

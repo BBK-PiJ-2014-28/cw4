@@ -13,6 +13,8 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
 	public String meetingNotes;
 	
+	//Constructors to take into account notes and no notes.
+	
 	PastMeetingImpl(int iDent, Calendar reserveTheBoardRoom, Set<Contact> theApprentice, String doodles){
 		super(iDent, reserveTheBoardRoom, theApprentice);
 		this.meetingNotes = doodles;
@@ -23,10 +25,12 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 		this.meetingNotes = "";
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getNotes() {
-		// TODO Auto-generated method stub
-		return null;
+		return meetingNotes;
 	}
 
 }
