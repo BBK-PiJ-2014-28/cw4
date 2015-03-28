@@ -22,6 +22,7 @@ public class MeetingTest {
 	public Set<Contact> testSet, correctSet;
 	public Contact rowan, raven;
 	public int iD = 12;
+	public String notes;
 	
 	@Before
 	public void buildUp(){
@@ -60,6 +61,16 @@ public class MeetingTest {
 		assertEquals(correctSet, testMeeting.getContacts());	
 	}
 	
+	//New test for NOTES of PASTMEETING
+	@Test
+	public void testGetMeetingNotes(){
+		testMeeting = new PastMeetingImpl(12, meetingDate, testSet, "Rowan was telepathically agressive");
+		assertEquals("Rowan was telepathically agressive", testMeeting.getNotes());
+		Meeting secondMeeting = new PastMeetingImpl(12, meetingDate, testSet);
+		assertEquals("", secondMeeting.getNotes());
+		secondMeeting = null;
+	}
+	
 	//Test of constructors at end so that other (necessary) methods tested first
 	
 	@Test
@@ -91,6 +102,8 @@ public class MeetingTest {
 		assertEquals(0, secondTest.getId());
 		assertEquals(null, thirdTest.getDate());
 		assertEquals(0, thirdTest.getId());
+		secondTest = null;
+		thirdTest = null;
 	}
 	
 }
