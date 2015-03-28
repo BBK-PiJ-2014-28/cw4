@@ -60,23 +60,28 @@ public class MeetingImpl implements Meeting {
 		this.meetersAndGreeters = theApprentice;
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.iD;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Calendar getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.requestedMeeting;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.meetersAndGreeters;
 	}
 
 }
