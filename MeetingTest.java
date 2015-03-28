@@ -11,13 +11,14 @@ import org.junit.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
+import java.util.HashSet;
 
 
 
 public class MeetingTest {
 
 	public Meeting testMeeting;
-	public Calendar meetingDate;
+	public Calendar meetingDate = new GregorianCalendar(2015, 8, 28, 6, 33);;
 	public Set<Contact> testSet, correctSet;
 	public Contact rowan, raven;
 	public int iD = 12;
@@ -26,9 +27,9 @@ public class MeetingTest {
 	public void buildUp(){
 		rowan = new ContactImpl("Rowan Gwyn");
 		raven = new ContactImpl("Jeff Raven");
+		testSet = new HashSet<Contact>();
 		testSet.add(rowan);
 		testSet.add(raven);
-		meetingDate = new GregorianCalendar(2015, 8, 28, 6, 33);
 		//meeting set up removed so can test the incorrect configurations
 	}
 	
@@ -41,7 +42,6 @@ public class MeetingTest {
 	public void testGetMeetingID() {
 		testMeeting = new MeetingImpl(12, meetingDate, testSet);
 		assertEquals(12, testMeeting.getId());
-		fail("Not yet implemented");
 	}
 	
 	@Test
@@ -49,16 +49,15 @@ public class MeetingTest {
 		testMeeting = new MeetingImpl(12, meetingDate, testSet);
 		Calendar correctDate = new GregorianCalendar(2015, 8, 28, 6, 33);
 		assertEquals(correctDate, testMeeting.getDate());
-		fail("Not yet implemented");
 	}
 	
 	@Test
 	public void testGetContacts() {
 		testMeeting = new MeetingImpl(12, meetingDate, testSet);
+		correctSet = new HashSet<Contact>();
 		correctSet.add(rowan);
 		correctSet.add(raven);
-		assertEquals(correctSet, testMeeting.getContacts());
-		fail("Not yet implemented");	
+		assertEquals(correctSet, testMeeting.getContacts());	
 	}
 	
 	//Test of constructors at end so that other (necessary) methods tested first

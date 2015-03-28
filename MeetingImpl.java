@@ -19,14 +19,14 @@ public class MeetingImpl implements Meeting {
 	
 	MeetingImpl(int iDent){
 		this.iD = iDent;
-		this.requestedMeeting = null; //should throw exception
-		this.meetersAndGreeters = null; //should throw exception
+		this.requestedMeeting = null; //should throw exception or be dealt with in code
+		this.meetersAndGreeters = null; //should throw exception or be dealt with in code
 	}
 	
 	MeetingImpl(Calendar reserveTheBoardroom){
-		this.iD = 0; //will need to make sure 0 throws exception
+		this.iD = 0; //exception/code
 		this.requestedMeeting = reserveTheBoardroom;
-		this.meetersAndGreeters = null; //exception to be thrown
+		this.meetersAndGreeters = null; //exception/code
 	}
 	
 	MeetingImpl(Set<Contact> theApprentice){
@@ -45,17 +45,17 @@ public class MeetingImpl implements Meeting {
 	MeetingImpl(int iDent, Calendar reserveTheBoardroom){
 		this.iD = iDent;
 		this.requestedMeeting = reserveTheBoardroom;
-		this.meetersAndGreeters = null; //this should throw exception
+		this.meetersAndGreeters = null; //exception/code
 	}
 	
 	MeetingImpl(int iDent, Set<Contact> theApprentice){
 		this.iD = iDent;
-		this.requestedMeeting = null; //exception
+		this.requestedMeeting = null; //exception/code
 		this.meetersAndGreeters = theApprentice;
 	}
 	
 	MeetingImpl(Calendar reserveTheBoardroom, Set<Contact> theApprentice){
-		this.iD = 0; //exception
+		this.iD = 0; //exception/code
 		this.requestedMeeting = reserveTheBoardroom;
 		this.meetersAndGreeters = theApprentice;
 	}
