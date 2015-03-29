@@ -92,11 +92,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	/**
-     * Returns the PAST meeting with the requested ID, or null if it there is none.
-     *
-     * @param id the ID for the meeting
-     * @return the meeting with the requested ID, or null if it there is none.
-     * @throws IllegalArgumentException if there is a meeting with that ID happening in the future
+     * {@inheritDoc}
      */
 	@Override
 	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {
@@ -109,7 +105,6 @@ public class ContactManagerImpl implements ContactManager {
 				if (myMeeting.getId().equals(id)){
 					throw new IllegalArgumentException();
 				}
-			}
 			return requested;
 	}
 	
@@ -144,12 +139,39 @@ public class ContactManagerImpl implements ContactManager {
 		return null;
 	}
 
+	
+	 /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
-			String text) {
-		// TODO Auto-generated method stub
+			String text) throws IllegalArgumentException, NullPointerException {
+			if (contacts == null) { 
+				throw new NullPointerException();
+			} else if (date == null) {
+				throw new NullPointerException();
+			} else if (text == null) {
+				throw new NullPointerException();
+			}
+			if (contacts.isEmpty()){
+				throw new IllegalArgumentException();
+			} else if (!netWorkThoseContacts.containsAll(contacts)){
+				throw new IllegalArgumentException();
+			}
 
-	}
+			PastMeeting pastMeeting = new PastMeetingImpl(meetingCounter,date, contacts, text);
+			pastMeetings.add(pastMeeting);
+			try {
+				ObjectOutputStream outPut = new ObjectOutputStream(new FileOutputStream(contactData));
+				outPut.reset();
+				outPut.writeObject(contactManagerWrapperList);
+				outPut.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			meetingCounter++;
+		}
+
 
 	@Override
 	public void addMeetingNotes(int id, String text) {
