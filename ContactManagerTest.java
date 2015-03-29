@@ -216,7 +216,24 @@ public class ContactManagerTest {
 	
 	@Test(expected= NullPointerException.class)
 	public void testNewPastMeetingNoNotes(){
-		testManager.addNewPastMeeting((testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), null);
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), null);
+	}
+	
+	//illegal argument exception should be thrown if contacts in set are invalid
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNewPastMeetingWithNobody(){
+		Set<Contact> falseSet = new HashSet<Contact>();
+		falseSet.add(new ContactImpl(302, "Kim"));
+		testManager.addNewPastMeeting(falseSet, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+	}
+
+	//empty contact set should also throw exception
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNewPastMeetingWithAbsolutelyNobody(){
+		Set<Contact> falseSet = new HashSet<Contact>();
+		testManager.addNewPastMeeting(falseSet, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
 	}
 	
 }
