@@ -90,12 +90,29 @@ public class ContactManagerImpl implements ContactManager {
 
 		return requestedMeeting.getId();
 	}
-
+	
+	/**
+     * Returns the PAST meeting with the requested ID, or null if it there is none.
+     *
+     * @param id the ID for the meeting
+     * @return the meeting with the requested ID, or null if it there is none.
+     * @throws IllegalArgumentException if there is a meeting with that ID happening in the future
+     */
 	@Override
-	public PastMeeting getPastMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {
+			PastMeeting requested = null;
+			for (PastMeeting myOldMeeting: pastMeetings);
+			if (myOldMeeting.getId().equals(id)) {
+				requested = myOldMeeting;
+			}
+			for (FutureMeeting myMeeting: futureMeetings);
+				if (myMeeting.getId().equals(id)){
+					throw new IllegalArgumentException();
+				}
+			}
+			return requested;
 	}
+	
 
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
