@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.*;
 
 import java.io.*;
 import java.nio.*;
@@ -101,7 +102,7 @@ public class ContactManagerTest {
 	 */
 	
 	@Test
-	public void serialIzeTest() throws IOException{
+	public void serialIzeTest() throws IOException {
 		ByteArrayOutputStream test = new ByteArrayOutputStream();
 		ObjectOutputStream serIalIze = new ObjectOutputStream(test);
 		serIalIze.writeObject(rowan);
@@ -116,6 +117,33 @@ public class ContactManagerTest {
 			e.printStackTrace();
 		}
 		assertEquals(testContact, rowan);
+	}	
+		
+	//read/write test
+	
+	@Test
+	public void readWriteTest() throws IOException {
+		assertTrue(testData.exists());
+		testManager.addFutureMeeting(testContacts, testCalendar);
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2014, 5, 17, 9, 35), "Went Well");
+		testManager.flush();
+		ObjectInputStream testStream = new ObjectInputStream(new FileInputStream("contactTest.txt"));
+		List testInput = null;
+		try {
+			testInput = (ArrayList) testStream.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				testStream.close();
+			} catch (IOException eXio){
+				eXio.printStackTrace();
+			}
+		}
+
+		List<Contact> listContactTest = (ArrayList<Contact>) testInput.get(2);
+
+		assertEquals(listContactTest.get(0), rowan);
 	}
 }
 
