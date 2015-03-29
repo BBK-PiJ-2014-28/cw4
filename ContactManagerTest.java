@@ -124,10 +124,11 @@ public class ContactManagerTest {
 	@Test
 	public void readWriteTest() throws IOException {
 		assertTrue(testData.exists());
+		
 		testManager.addFutureMeeting(testContacts, testCalendar);
 		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2014, 5, 17, 9, 35), "Went Well");
 		testManager.flush();
-		ObjectInputStream testStream = new ObjectInputStream(new FileInputStream("contactTest.txt"));
+		ObjectInputStream testStream = new ObjectInputStream(new FileInputStream("testContacts.txt"));
 		List testInput = null;
 		try {
 			testInput = (ArrayList) testStream.readObject();
@@ -140,10 +141,17 @@ public class ContactManagerTest {
 				eXio.printStackTrace();
 			}
 		}
-
+		
+		/**
+		 * I think the best way to read/write from the file is to make a master list which
+		 * contains other more specific lists - one per meeting type and for contacts
+		 * Arrays are the lists that I prefer.
+		 */
+		
 		List<Contact> listContactTest = (ArrayList<Contact>) testInput.get(2);
-
 		assertEquals(listContactTest.get(0), rowan);
+		
+		
 	}
 }
 
