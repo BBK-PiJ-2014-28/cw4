@@ -1,21 +1,3 @@
-/**
- * Class to Test ContactManager using JUnit
- * @author Annabel Jump
- * for PiJ Coursework 4
- */
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
-
-import java.io.*;
-
 public class ContactManagerTest {
 
 	public int meetingCounter, contactCounter;
