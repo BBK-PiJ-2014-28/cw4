@@ -6,7 +6,7 @@
 
 import java.io.*;
 
-public class ContactImpl implements Contact {
+public class ContactImpl implements Contact, Serializable {
 
     public int identification;
     public String name;
@@ -26,7 +26,7 @@ public class ContactImpl implements Contact {
         this.notes = "";
     }
 
-    ContactImpl(String contactName, int number){
+    ContactImpl(int number, String contactName){
         this.identification = number;
         this.name = contactName;
         this.notes = "";
