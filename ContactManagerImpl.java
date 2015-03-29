@@ -23,7 +23,7 @@ public class ContactManagerImpl implements ContactManager {
 	public List<Contact> netWorkThoseContacts;
 	
 	public ContactManagerImpl() throws IOException {
-		contactData = new File("contactsMeetings.txt");
+		contactData = new File("Contacts.txt");
 		todayTodayToday = GregorianCalendar.getInstance(); 
 		try {
 			
