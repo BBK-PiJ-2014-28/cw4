@@ -4,16 +4,53 @@
  * for PiJ Coursework 4
  */
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.*;
 import java.io.*;
+import java.nio.*;
 
 
 public class ContactManagerImpl implements ContactManager {
-
+	
+	public int meetingCounter, contactCounter;
+	public File contactData;
+	public ContactManager contactManager;
+	public Calendar requestedDate, todayTodayToday;
+	public Set<Contact> meetingWith;
+	public ObjectInputStream inputToFile;
+	public List<List<?>> contactManagerWrapperList;
+	public List<PastMeeting> pastMeetings;
+	public List<FutureMeeting> futureMeetings;
+	public List<Contact> netWorkThoseContacts;
+	
+	public ContactManagerImpl() throws IOException {
+		contactData = new File("contactsMeetings.txt");
+		todayTodayToday = GregorianCalendar.getInstance(); 
+		try {
+			
+			//if not first time ContactManager used, retrieve old data
+			if (contactData.exists() && contactData.length() > 0) {
+				inputToFile = new ObjectInputStream(new FileInputStream(contactData));
+				contactManagerWrapperList = (ArrayList) inputToFile.readObject();
+				futureMeetings = (ArrayList) contactManagerWrapperList.get(0);
+				pastMeetings = (ArrayList) contactManagerWrapperList.get(1);
+				netWorkThoseContacts = (ArrayList) contactManagerWrapperList.get(2);
+			
+			
+			} else { //no data, initialise
+				pastMeetings = new ArrayList<PastMeeting>();
+				futureMeetings = new ArrayList<FutureMeeting>();
+				netWorkThoseContacts = new ArrayList<Contact>();
+				contactManagerWrapperList = new ArrayList<List<?>>();
+				contactManagerWrapperList.add(futureMeetings);
+				contactManagerWrapperList.add(pastMeetings);
+				contactManagerWrapperList.add(netWorkThoseContacts);
+			}
+			
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 		// TODO Auto-generated method stub
