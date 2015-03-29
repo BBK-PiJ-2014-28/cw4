@@ -150,8 +150,45 @@ public class ContactManagerTest {
 		
 		List<Contact> listContactTest = (ArrayList<Contact>) testInput.get(2);
 		assertEquals(listContactTest.get(0), rowan);
+
+		List<FutureMeeting> futureMeetingTestList = (ArrayList<FutureMeeting>) testInput.get(0);
+		assertEquals(futureMeetingTestList.get(0), testCalendar);
 		
-		
+		List<PastMeeting> pastMeetingTestList = (ArrayList<PastMeeting>) testInput.get(1);
+		assertEquals(pastMeetingTestList.get(0).getNotes(), "Went Well");
 	}
+	
+	//Test getPastMeeting
+	
+	@Test
+	public void testGetPastMeeting() {
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 28, 6, 33), "Birthday");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 5, 17, 9, 45));
+		assertEquals(testManager.getPastMeeting(3).getNotes(), "Birthday"); //ID should be actual number of meeting
+	}
+
+	//getPastMeeting should return null for nonexistant meeting
+	
+	@Test
+	public void testGetPastMeetingReturnsNull(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		assertNull(testManager.getPastMeeting(5));
+	}
+	
+	//getPastMeeting should throw exception when FutureMeeting attempted to be retrieved
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetPastMeetingException1(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.getPastMeeting(2);
+	}
+
+	
+
+	
 }
 
