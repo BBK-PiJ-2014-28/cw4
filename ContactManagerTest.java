@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Class to Test ContactManager using JUnit
  * @author Annabel Jump
@@ -18,6 +19,8 @@ import java.util.List;
 import java.io.*;
 import java.nio.*;
 
+=======
+>>>>>>> ecedb523e3e382f3b4d81d17e2b6a8ba27f1895a
 public class ContactManagerTest {
 
 	public int meetingCounter, contactCounter;
