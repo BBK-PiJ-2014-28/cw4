@@ -187,8 +187,37 @@ public class ContactManagerTest {
 		testManager.getPastMeeting(2);
 	}
 
+	/**
+	 * can't get a past meeting without adding them!
+	 * Next test addNewPastMeeting!
+	 */
 	
+	@Test
+	public void testAddNewPastMeeting() {
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		assertEquals(testManager.getPastMeeting(1).getNotes(), "Wedding Day");
+	}
 
+	//should throw null exception if contacts null
+	
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNoContacts(){
+		testManager.addNewPastMeeting(null, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+	}
+	
+	//should throw null exception if date is null
+	
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNoDate(){
+		testManager.addNewPastMeeting(testContacts, null, "Wedding Day");
+	}
+	
+	//should throw null exception if notes are null
+	
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNoNotes(){
+		testManager.addNewPastMeeting((testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), null);
+	}
 	
 }
 
