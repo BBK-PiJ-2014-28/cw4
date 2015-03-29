@@ -95,4 +95,27 @@ public class ContactManagerTest {
 		testManager.addFutureMeeting(falseSet, testCalendar);
 	}
 
+	/**
+	 * need to test serialization and reading/writing to file
+	 * Start with serialization test
+	 */
+	
+	@Test
+	public void serialIzeTest() throws IOException{
+		ByteArrayOutputStream test = new ByteArrayOutputStream();
+		ObjectOutputStream serIalIze = new ObjectOutputStream(test);
+		serIalIze.writeObject(rowan);
+		serIalIze.close();
+		assertTrue(test.toByteArray().length > 0);
+		ByteArrayInputStream testIn = new ByteArrayInputStream(test.toByteArray());
+		ObjectInputStream deSerIalIze = new ObjectInputStream(testIn);
+		Contact testContact = null;
+		try {
+			testContact = (Contact) deSerIalIze.readObject();
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		assertEquals(testContact, rowan);
+	}
 }
+
