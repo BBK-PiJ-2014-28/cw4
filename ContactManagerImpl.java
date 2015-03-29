@@ -11,7 +11,7 @@ import java.nio.*;
 
 public class ContactManagerImpl implements ContactManager {
 	
-	public int meetingCounter, contactCounter;
+	public int meetingCounter = 0, contactCounter = 0;
 	public File contactData;
 	public ContactManager contactManager;
 	public Calendar requestedDate, todayTodayToday;
@@ -51,10 +51,44 @@ public class ContactManagerImpl implements ContactManager {
 		}
 	}
 	
+	 /**
+     * {@inheritDoc}
+     */
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) 
+			throws IllegalArgumentException {
+		//first check date valid
+		if (date.before(todayTodayToday)) {
+			throw new IllegalArgumentException();
+			
+		//check all contacts exist	
+		} else if (!netWorkThoseContacts.containsAll(contacts)) {
+			throw new IllegalArgumentException();
+		
+		//proceed with adding meeting
+		} else
+		/**
+		 * initialise meetingCounter as being 1 larger than the size of both past + future arrays
+		 * thus if no meetings, first meeting will be 1.
+		 */
+		meetingCounter = (futureMeetings.size() + pastMeetings.size()) + 1;
+		//make new meeting
+		FutureMeeting requestedMeeting = new FutureMeetingImpl(meetingCounter, date, contacts);
+		futureMeetings.add(requestedMeeting); //add to list
+		
+		try {
+			ObjectOutputStream outPut = new ObjectOutputStream(new FileOutputStream(contactData));
+			outPut.reset();
+			outPut.writeObject(contactManagerWrapperList);
+			outPut.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		meetingCounter++;
+
+		return requestedMeeting.getId();
 	}
 
 	@Override
