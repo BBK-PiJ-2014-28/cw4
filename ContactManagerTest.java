@@ -70,5 +70,29 @@ public class ContactManagerTest {
 		meetingCounter = testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 7, 3, 45));
 		assertEquals(2, meetingCounter); //second meeting added therefore should be 2
 	}
+	
+	/**
+	 * exception should be thrown where meeting added is
+	 * in fact, in the past
+	 */
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddPastFutureMeeting(){
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2014, 8, 28, 14, 50));
+	}
+	
+	/**
+	 * exception should be thrown where contacts in set do not exist
+	 * (program should check the list of entered contacts against 
+	 * contacts in the set)
+	 */
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddMeetingWithNobody(){
+		Set<Contact> falseSet = new HashSet<Contact>();
+		falseSet.add(rowan);
+		falseSet.add(new ContactImpl("Nobody"));
+		testManager.addFutureMeeting(falseSet, testCalendar);
+	}
 
 }
