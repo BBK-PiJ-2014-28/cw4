@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.*;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import java.io.*;
+import java.nio.*;
 
 public class ContactManagerTest {
 
