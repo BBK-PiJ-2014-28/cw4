@@ -49,6 +49,12 @@ public class ContactManagerImpl implements ContactManager {
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+		/**
+		 * initialise meetingCounter as being 1 larger than the size of both past + future arrays
+		 * thus if no meetings, first meeting will be 1.
+		 */
+		meetingCounter = (futureMeetings.size() + pastMeetings.size()) + 1;
+		//had to move here otherwise would be reset every time meeting added.
 	}
 	
 	 /**
@@ -66,15 +72,12 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException();
 		
 		//proceed with adding meeting
-		} else
-		/**
-		 * initialise meetingCounter as being 1 larger than the size of both past + future arrays
-		 * thus if no meetings, first meeting will be 1.
-		 */
-		meetingCounter = (futureMeetings.size() + pastMeetings.size()) + 1;
+		} else {
+		
 		//make new meeting
 		FutureMeeting requestedMeeting = new FutureMeetingImpl(meetingCounter, date, contacts);
 		futureMeetings.add(requestedMeeting); //add to list
+		}
 		
 		try {
 			ObjectOutputStream outPut = new ObjectOutputStream(new FileOutputStream(contactData));
@@ -88,7 +91,9 @@ public class ContactManagerImpl implements ContactManager {
 		
 		meetingCounter++;
 
-		return requestedMeeting.getId();
+		int requestedID = requestedMeeting.getId();
+		
+		return requestedID;
 	}
 	
 	/**

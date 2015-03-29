@@ -236,5 +236,35 @@ public class ContactManagerTest {
 		testManager.addNewPastMeeting(falseSet, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
 	}
 	
+	//next test getFutureMeeting
+	@Test
+	public void testGetFutureMeeting() {
+		Calendar weddingAnniversary = new GregorianCalendar(2015, 8, 27, 13, 00);
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 28, 6, 33), "Birthday");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 5, 17, 9, 45));
+		assertEquals(testManager.getPastMeeting(2).getDate(), weddingAnniversary);
+	}
+	
+	//getFutureMeeting should return null when null
+	
+	@Test
+	public void testGetFutureMeetingReturnsNull(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		assertNull(testManager.getPastMeeting(5));
+	}
+	
+	//getFutureMeeting should throw exception if is in fact a past meeting
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetFutureMeetingException(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.getFutureMeeting(1);
+	}
+	
+	
 }
 
