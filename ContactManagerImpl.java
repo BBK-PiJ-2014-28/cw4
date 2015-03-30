@@ -155,15 +155,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	/**
-     * Returns the list of future meetings scheduled with this contact.
-     *
-     * If there are none, the returned list will be empty. Otherwise,
-     * the list will be chronologically sorted and will not contain any
-     * duplicates.
-     *
-     * @param contact one of the user’s contacts
-     * @return the list of future meeting(s) scheduled with this contact (maybe empty).
-     * @throws IllegalArgumentException if the contact does not exist
+     * {@inheritDoc}
      */
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException {
@@ -182,12 +174,19 @@ public class ContactManagerImpl implements ContactManager {
 		return scheduledMeetings;
 	}
 	
-
-
+	/**
+     *{@inheritDoc}
+     */
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Meeting> thisDaysMeetings = new ArrayList<Meeting>();
+		for (Meeting bookedMeeting : allMeetings) {
+			if (bookedMeeting.getDate().equals(date)) {
+				thisDaysMeetings.add(bookedMeeting);
+			}
+		}
+		Collections.sort(thisDaysMeetings, (m1, m2) -> m1.getDate().compareTo(m2.getDate()));
+		return thisDaysMeetings;
 	}
 
 	@Override
