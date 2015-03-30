@@ -189,10 +189,24 @@ public class ContactManagerImpl implements ContactManager {
 		return thisDaysMeetings;
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
-	public List<PastMeeting> getPastMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PastMeeting> getPastMeetingList(Contact contact) throws IllegalArgumentException {
+		if (!netWorkThoseContacts.contains(contact)) {
+			throw new IllegalArgumentException();
+		} 
+		List<PastMeeting> historicMeetings = new ArrayList<PastMeeting>();
+		for (PastMeeting priorMeeting : pastMeetings) {
+			if (priorMeeting.getContacts().contains(contact)
+					&& priorMeeting.getDate().before(todayTodayToday)) {
+				historicMeetings.add(priorMeeting);
+			}
+		} 
+		Collections.sort(historicMeetings, (m1, m2) -> m1.getDate().compareTo(m2.getDate()));
+		//sort into chronological order
+		return historicMeetings;
 	}
 
 	
