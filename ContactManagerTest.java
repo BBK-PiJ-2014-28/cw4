@@ -277,5 +277,27 @@ public class ContactManagerTest {
 		assertEquals(testManager.getMeeting(2).getDate(), weddingAnniversary);
 		assertNull(testManager.getMeeting(7));
 	}
+	
+	//Next tests for getFutureMeetingList(Contact)
+	
+	@Test
+	public void testGetFutureMeetingContactList(){
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		List<Meeting> personalMeetingSchedule = testManager.getFutureMeetingList(rowan);
+		assertTrue(personalMeetingSchedule.get(0).getContacts().equals(testContacts));
+	}
+	
+	//meetings should be sorted chronologically
+	
+	@Test
+	public void testSortChronologically(){
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2019, 8, 27, 13, 00));
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2019, 8, 28, 6, 33));
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 5, 17, 9, 45));
+		List<Meeting> dateOrder = testManager.getFutureMeetingList(rowan);
+		Calendar first = new GregorianCalendar(2015, 5, 17, 9, 45);
+		assertEquals(dateOrder.get(0).getDate(), first);
+	}
 }
 
