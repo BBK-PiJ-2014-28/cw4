@@ -265,6 +265,17 @@ public class ContactManagerTest {
 		testManager.getFutureMeeting(1);
 	}
 	
+	//Moving on, test plan getMeeting - will test null return in same test
 	
+	@Test
+	public void testGetMeeting() {
+		Calendar weddingAnniversary = new GregorianCalendar(2015, 8, 27, 13, 00);
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00));
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 28, 6, 33), "Birthday");
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2015, 5, 17, 9, 45));
+		assertEquals(testManager.getMeeting(2).getDate(), weddingAnniversary);
+		assertNull(testManager.getMeeting(7));
+	}
 }
 
