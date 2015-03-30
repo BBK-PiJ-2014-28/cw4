@@ -299,5 +299,12 @@ public class ContactManagerTest {
 		Calendar first = new GregorianCalendar(2015, 5, 17, 9, 45);
 		assertEquals(dateOrder.get(0).getDate(), first);
 	}
+	
+	//future meeting lists with a nonexistant contact throw an exception
+	@Test(expected = IllegalArgumentException.class)
+	public void testFutureMeetingListWithNobody(){
+		Contact earthPrime = new ContactImpl("Reidinger");
+		List<Meeting> clairvoyantMeetings = testManager.getFutureMeetingList(earthPrime);
+	}
 }
 
