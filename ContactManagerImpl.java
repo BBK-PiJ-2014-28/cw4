@@ -113,11 +113,21 @@ public class ContactManagerImpl implements ContactManager {
 			return requested;
 	}
 	
-
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		FutureMeeting requested = null;
+		for (FutureMeeting myPlannedMeeting: futureMeetings);
+		if (myPlannedMeeting.getId().equals(id)) {
+			requested = myPlannedMeeting;
+		}
+		for (PastMeeting myMeeting: pastMeetings);
+			if (myMeeting.getId().equals(id)){
+				throw new IllegalArgumentException();
+		}
+		return requested;
 	}
 
 	@Override
