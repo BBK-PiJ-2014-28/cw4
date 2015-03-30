@@ -6,16 +6,9 @@
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 import org.junit.*;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
 import java.util.*;
-
 import java.io.*;
 import java.nio.*;
 
@@ -301,10 +294,20 @@ public class ContactManagerTest {
 	}
 	
 	//future meeting lists with a nonexistant contact throw an exception
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testFutureMeetingListWithNobody(){
 		Contact earthPrime = new ContactImpl("Reidinger");
 		List<Meeting> clairvoyantMeetings = testManager.getFutureMeetingList(earthPrime);
+	}
+	
+	//test getFutureMeetingList(Date)
+	@Test
+	public void testGetFutureMeetingDateList(){
+		Calendar rehearsal = new GregorianCalendar(2015, 8, 27, 13, 00);
+		testManager.addFutureMeeting(testContacts, rehearsal);
+		List<Meeting> personalMeetingSchedule = testManager.getFutureMeetingList(rehearsal);
+		assertTrue(personalMeetingSchedule.get(0).getDate().equals(rehearsal));
 	}
 }
 
