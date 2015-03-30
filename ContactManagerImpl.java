@@ -20,7 +20,9 @@ public class ContactManagerImpl implements ContactManager {
 	public List<List<?>> contactManagerWrapperList;
 	public List<PastMeeting> pastMeetings;
 	public List<FutureMeeting> futureMeetings;
+	public List<Meeting> allMeetings;
 	public List<Contact> netWorkThoseContacts;
+	
 	
 	public ContactManagerImpl() throws IOException {
 		contactData = new File("Contacts.txt");
@@ -34,16 +36,19 @@ public class ContactManagerImpl implements ContactManager {
 				futureMeetings = (ArrayList) contactManagerWrapperList.get(0);
 				pastMeetings = (ArrayList) contactManagerWrapperList.get(1);
 				netWorkThoseContacts = (ArrayList) contactManagerWrapperList.get(2);
+				allMeetings = (ArrayList) contactManagerWrapperList.get(3);
 			
 			
 			} else { //no data, initialise
 				pastMeetings = new ArrayList<PastMeeting>();
 				futureMeetings = new ArrayList<FutureMeeting>();
+				allMeetings = new ArrayList<Meeting>();
 				netWorkThoseContacts = new ArrayList<Contact>();
 				contactManagerWrapperList = new ArrayList<List<?>>();
 				contactManagerWrapperList.add(futureMeetings);
 				contactManagerWrapperList.add(pastMeetings);
 				contactManagerWrapperList.add(netWorkThoseContacts);
+				contactManagerWrapperList.add(allMeetings);
 			}
 			
 		} catch (ClassNotFoundException | IOException e) {
@@ -52,8 +57,9 @@ public class ContactManagerImpl implements ContactManager {
 		/**
 		 * initialise meetingCounter as being 1 larger than the size of both past + future arrays
 		 * thus if no meetings, first meeting will be 1.
+		 * (now that allMeetings added, only size of that is required)
 		 */
-		meetingCounter = (futureMeetings.size() + pastMeetings.size()) + 1;
+		meetingCounter = allMeetings.size() + 1;
 		//had to move here otherwise would be reset every time meeting added.
 	}
 	
@@ -77,6 +83,7 @@ public class ContactManagerImpl implements ContactManager {
 		//make new meeting
 		FutureMeeting requestedMeeting = new FutureMeetingImpl(meetingCounter, date, contacts);
 		futureMeetings.add(requestedMeeting); //add to list
+		allMeetings.add(requestedMeeting); //add to total list for easier searching
 		}
 		
 		try {
@@ -147,11 +154,35 @@ public class ContactManagerImpl implements ContactManager {
 		return requested;
 	}
 
+	/**
+     * Returns the list of future meetings scheduled with this contact.
+     *
+     * If there are none, the returned list will be empty. Otherwise,
+     * the list will be chronologically sorted and will not contain any
+     * duplicates.
+     *
+     * @param contact one of the user’s contacts
+     * @return the list of future meeting(s) scheduled with this contact (maybe empty).
+     * @throws IllegalArgumentException if the contact does not exist
+     */
 	@Override
-	public List<Meeting> getFutureMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException {
+		if (!netWorkThoseContacts.contains(contact)) {
+			throw new IllegalArgumentException();
+		} 
+		List<Meeting> scheduledMeetings = new ArrayList<Meeting>();
+		for (Meeting plannedMeeting : allMeetings) {
+			if (plannedMeeting.getContacts().contains(contact)
+					&& plannedMeeting.getDate().after(todayTodayToday)) {
+				scheduledMeetings.add(plannedMeeting);
+			}
+		} 
+		Collections.sort(scheduledMeetings, (m1, m2) -> m1.getDate().compareTo(m2.getDate()));
+		//sort into chronological order
+		return scheduledMeetings;
 	}
+	
+
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
@@ -187,6 +218,7 @@ public class ContactManagerImpl implements ContactManager {
 
 			PastMeeting pastMeeting = new PastMeetingImpl(meetingCounter,date, contacts, text);
 			pastMeetings.add(pastMeeting);
+			allMeetings.add(pastMeeting);
 			try {
 				ObjectOutputStream outPut = new ObjectOutputStream(new FileOutputStream(contactData));
 				outPut.reset();
@@ -228,5 +260,6 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
+	}
 
-}
+
