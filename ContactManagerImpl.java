@@ -243,11 +243,44 @@ public class ContactManagerImpl implements ContactManager {
 			meetingCounter++;
 		}
 
-
+	/**
+     * Add notes to a meeting.
+     *
+     * This method is used when a future meeting takes place, and is
+     * then converted to a past meeting (with notes).
+     *
+     * It can be also used to add notes to a past meeting at a later date.
+     *
+     * @param id the ID of the meeting
+     * @param text messages to be added about the meeting.
+     * @throws IllegalArgumentException if the meeting does not exist
+     * @throws IllegalStateException if the meeting is set for a date in the future
+     * @throws NullPointerException if the notes are null
+     */
 	@Override
-	public void addMeetingNotes(int id, String text) {
-		// TODO Auto-generated method stub
-
+	public void addMeetingNotes(int id, String text) 
+			throws IllegalArgumentException, IllegalStateException, NullPointerException {
+		//start with the easy bit!
+		if (text == null) {
+			throw new NullPointerException();
+		}
+		Meeting theOneWeWant = new MeetingImpl();
+		for (Meeting thisMeeting : allMeetings);
+			if (thisMeeting.getId().equals(id)) {
+				theOneWeWant = thisMeeting;
+				if (theOneWeWant.getDate().after(todayTodayToday)) {
+					throw new IllegalStateException();
+				}
+				//remove meeting from futureMeetings list, as is now in past (with notes)
+				for (FutureMeeting notAnymore : futureMeetings){
+					if (notAnymore.getId() == id) {
+						futureMeetings.remove(id);
+					}
+				}
+				PastMeeting nowTimeIsGone = new PastMeetingImpl(id, theOneWeWant.getDate(), theOneWeWant.getContacts(), text);
+				pastMeetings.add(nowTimeIsGone);
+			} //meeting not in system, if not found in allMeetings!
+			throw new IllegalArgumentException();
 	}
 
 	@Override
