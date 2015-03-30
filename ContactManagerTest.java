@@ -309,5 +309,18 @@ public class ContactManagerTest {
 		List<Meeting> personalMeetingSchedule = testManager.getFutureMeetingList(rehearsal);
 		assertTrue(personalMeetingSchedule.get(0).getDate().equals(rehearsal));
 	}
+	
+	//test getPastMeetingList(contact)
+	@SuppressWarnings("unused")
+	@Test
+	public void testGetPastMeetingContactList(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00), "Consensus Achieved");
+		List<PastMeeting> historicMeetingSchedule = testManager.getPastMeetingList(rowan);
+		assertTrue(historicMeetingSchedule.get(0).getContacts().equals(testContacts));
+		//now will test contact that does not exist
+		Contact earthPrime = new ContactImpl("Reidinger");
+		List<PastMeeting> priorMeetings = testManager.getPastMeetingList(earthPrime);
+	}
+	
 }
 
