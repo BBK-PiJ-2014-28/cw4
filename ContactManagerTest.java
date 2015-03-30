@@ -322,5 +322,45 @@ public class ContactManagerTest {
 		List<PastMeeting> priorMeetings = testManager.getPastMeetingList(earthPrime);
 	}
 	
+	//test addMeetingNotes
+	
+	@Test
+	public void testAddNotesToMeeting() {
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2015, 8, 27, 13, 00), "");
+		testManager.addMeetingNotes(1, "Does this Thing Really Work?");
+		assertEquals("Does this Thing Really Work?", testManager.getPastMeeting(1).getNotes());
+		//what about adding MORE notes when there are already notes?
+		testManager.addMeetingNotes(1, "Why yes it does!");
+		assertEquals("Does this Thing Really Work? Why yes it does!", testManager.getPastMeeting(1).getNotes());
+	}
+	
+	
+	
+	
+	//TODO write tests for changing futuremeeting to pastmeeting
+	
+	
+	
+	
+	
+	//test correct exceptions thrown by addMeetingNotes
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotesToNonexistantMeeting(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "Wedding Day");
+		testManager.addMeetingNotes(2, "Life");
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testNotesToFutureMeeting(){
+		testManager.addFutureMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00));
+		testManager.addMeetingNotes(1, "Life");
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testNullNotes(){
+		testManager.addNewPastMeeting(testContacts, new GregorianCalendar(2009, 8, 27, 13, 00), "");
+		testManager.addMeetingNotes(1, null);
+	}
 }
 
